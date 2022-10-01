@@ -1,33 +1,39 @@
 import { StyleSheet, Text, TextInput, View,Dimensions, SafeAreaView, TouchableOpacity,Image } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
-const Login = ({navigation}) => {
+
+const Signup = ({navigation}) => {
+    const [Name, setName] = useState("")
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
+
+
+    const chat=()=>{
+
+    }
   return (
     <SafeAreaView style={styles.container}>
     <View style={styles.container}>
     <View>
     <Text style={{fontSize:30,fontWeight:'bold',alignSelf:'center',color:"#ffffff",}}>  Baat Cheet</Text>
         <Image style={styles.img} source={require("../assets/icon.png")} />
+        <Text style={{fontSize:22,fontWeight:'bold',alignSelf:'center',color:"#ffffff",marginBottom:4}}> Welcome {Name}</Text>
+        
+        <Text style={styles.text}>Name</Text>
+        <TextInput style={styles.inputContainer} placeholder='Name' onChangeText={(text)=>setName(text)} ></TextInput>
+      
       <Text style={styles.text}>Email</Text>
       <TextInput style={styles.inputContainer} onChangeText={(text)=>setEmail(text)}  placeholder='Email'></TextInput>
       <Text style={styles.text}>Password</Text>
-      <TextInput style={styles.inputContainer} onChangeText={(text)=>setPassword(text)}  placeholder='Password' secureTextEntry ></TextInput>
-      <TouchableOpacity style={styles.btn} ><Text>Sign In</Text></TouchableOpacity>
-      <View style={{flexDirection:'row',alignSelf:'center',marginTop:10}}>
-        <Text >Don't have an account yet?</Text>
-      <TouchableOpacity onPress={()=>navigation.navigate("Signup")} ><Text style={{fontWeight:'bold'}}>Signup</Text></TouchableOpacity>
-      </View>
-      
+      <TextInput style={styles.inputContainer}onChangeText={(text)=>setPassword(text)}  placeholder='Password' secureTextEntry ></TextInput>
+      <TouchableOpacity style={styles.btn} ><Text>Signup</Text></TouchableOpacity>
       </View>
     </View>
     </SafeAreaView>
-    
   )
 }
 
-export default Login
+export default Signup
 
 const styles = StyleSheet.create({
     container:{
@@ -72,3 +78,4 @@ const styles = StyleSheet.create({
     }
 
 })
+
