@@ -1,9 +1,28 @@
 import { StyleSheet, Text, TextInput, View,Dimensions, SafeAreaView, TouchableOpacity,Image } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { auth } from '../firebase'
 const Login = ({navigation}) => {
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
+    useEffect(()=>{
+      auth.onAuthStateChanged(user=>{
+        if(user){
+          navigation.navigate("Homescreen")
+        }
+      })
+    },[])
+    const login =()=>{
+      auth.signInWithEmailAndPassword(Email,Password).then(userCredentials=>{
+        const user = userCredentials.user;
+        console.log(user.Email)
+        navigation.navigate("Homescreen")
+      }
+    )
+    .catch(error=>alert(error.message))
+    
+    }
+    
   return (
     <SafeAreaView style={styles.container}>
     <View style={styles.container}>
@@ -14,7 +33,7 @@ const Login = ({navigation}) => {
       <TextInput style={styles.inputContainer} onChangeText={(text)=>setEmail(text)}  placeholder='Email'></TextInput>
       <Text style={styles.text}>Password</Text>
       <TextInput style={styles.inputContainer} onChangeText={(text)=>setPassword(text)}  placeholder='Password' secureTextEntry ></TextInput>
-      <TouchableOpacity style={styles.btn} ><Text>Sign In</Text></TouchableOpacity>
+      <TouchableOpacity onPress={login} style={styles.btn} ><Text>Sign In</Text></TouchableOpacity>
       <View style={{flexDirection:'row',alignSelf:'center',marginTop:10}}>
         <Text >Don't have an account yet?</Text>
       <TouchableOpacity onPress={()=>navigation.navigate("Signup")} ><Text style={{fontWeight:'bold'}}>Signup</Text></TouchableOpacity>

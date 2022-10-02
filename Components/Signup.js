@@ -1,19 +1,32 @@
-import { StyleSheet, Text, TextInput, View,Dimensions, SafeAreaView, TouchableOpacity,Image } from 'react-native'
+import { StyleSheet, Text, TextInput, View,Dimensions, SafeAreaView, TouchableOpacity,Image,StatusBar } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
+import {auth} from "../firebase"
+
+
 
 const Signup = ({navigation}) => {
     const [Name, setName] = useState("")
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
-
-
-    const chat=()=>{
-
+    const create=()=>{
+      auth.createUserWithEmailAndPassword(Email,Password).then(
+        userCredentials=>{
+          const user = userCredentials.user;
+          console.log(user.Email)
+        }
+      )
+      .catch(error=>alert(error.message))
     }
+
+
+
   return (
+    
     <SafeAreaView style={styles.container}>
+    
     <View style={styles.container}>
+    
     <View>
     <Text style={{fontSize:30,fontWeight:'bold',alignSelf:'center',color:"#ffffff",}}>  Baat Cheet</Text>
         <Image style={styles.img} source={require("../assets/icon.png")} />
@@ -26,7 +39,11 @@ const Signup = ({navigation}) => {
       <TextInput style={styles.inputContainer} onChangeText={(text)=>setEmail(text)}  placeholder='Email'></TextInput>
       <Text style={styles.text}>Password</Text>
       <TextInput style={styles.inputContainer}onChangeText={(text)=>setPassword(text)}  placeholder='Password' secureTextEntry ></TextInput>
-      <TouchableOpacity style={styles.btn} ><Text>Signup</Text></TouchableOpacity>
+      <TouchableOpacity onPress={create} style={styles.btn} ><Text>Signup</Text></TouchableOpacity>
+      <View style={{flexDirection:'row',alignSelf:'center',marginTop:10}}>
+        <Text >Already have an account</Text>
+      <TouchableOpacity onPress={()=>navigation.navigate("Signin")} ><Text style={{fontWeight:'bold'}}>SignIn</Text></TouchableOpacity>
+      </View>
       </View>
     </View>
     </SafeAreaView>
