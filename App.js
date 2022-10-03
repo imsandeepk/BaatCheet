@@ -6,8 +6,9 @@ import Login from './Components/Login';
 import Signup from './Components/Signup';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import EvilIcons from "react-native-vector-icons/EvilIcons"
+import FontAwesome from "react-native-vector-icons/FontAwesome"
 import Homescreen from './Components/Homescreen';
+import Chat from './Components/Chat';
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
       <Stack.Navigator >
         <Stack.Screen name="Signin" component={Login} options={{headerShown:false}}  />
         <Stack.Screen name="Signup" component={Signup} options={{headerShown:false}} />
-        <Stack.Screen name="Homescreen" component={Homescreen} options={{title:"Baat Cheet",headerStyle:{backgroundColor:"#ffffff"},headerRight:()=><EvilIcons name='user' size={50} color="#7FBCD2"/>,headerLeft:()=>false}} />
+        <Stack.Screen name="Homescreen" component={Homescreen} options={{title:"Baat Cheet",headerStyle:{backgroundColor:"#ffffff"},headerRight:()=><FontAwesome name='sign-out' size={30} color="#7FBCD2"/>,headerLeft:()=>false}} />
+        <Stack.Screen name="Chat" component={Chat}  />
       </Stack.Navigator>
     </NavigationContainer>
   );

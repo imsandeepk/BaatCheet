@@ -9,26 +9,35 @@ import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase
 const Login = ({navigation}) => {
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
+    const [Loading, setLoading] = useState(false)
+    if(Loading){
+      return <ActivityIndicator style={{flex:1,alignSelf:'center'}} size="large" color="#00ff00" />
+
+    }
     
 
    const auth = getAuth(app);
 
     useEffect(()=>{
+      setLoading(true)
       const unsub=onAuthStateChanged(auth,(user)=>{
         if(user){
           navigation.navigate("Homescreen")
         }
       });
+      setLoading(false);
        return unsub
+       
     },[])
     const login =()=>{
+      setLoading(true)
       signInWithEmailAndPassword(auth,Email,Password).then(userCredentials=>{
         const user = userCredentials.user;
-        console.log(user.Email)
         navigation.navigate("Homescreen")
       }
     )
     .catch(error=>alert(error.message))
+    setLoading(false);
     
     }
     

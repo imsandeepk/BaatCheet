@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View,Dimensions, SafeAreaView, TouchableOpacity,Image,StatusBar } from 'react-native'
+import { StyleSheet, Text, TextInput, View,Dimensions, SafeAreaView, TouchableOpacity,Image,StatusBar, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import {app} from "../firebase"
@@ -12,9 +12,15 @@ const Signup = ({navigation}) => {
     const [Name, setName] = useState("")
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
+    const [Loading, setLoading] = useState(false)
     const auth = getAuth(app)
     const db = getFirestore(app)
+    if(Loading){
+      return <ActivityIndicator style={{flex:1,alignSelf:'center'}} size="large" color="#00ff00" />
+
+    }
     const create= async ()=>{
+      setLoading(true)
       await createUserWithEmailAndPassword(auth,Email,Password).then(
         (userCredentials)=>{
           const user = userCredentials.user;
@@ -30,13 +36,16 @@ const Signup = ({navigation}) => {
       await addDoc(collection(db,"name"),{
         email:Email,
         name:Name,
-        password:Password
+        password:Password,
+        id:Date.now()
         
       })}
       catch (e) {
         console.error("Error adding document: ", e);
     
-    }}
+    }
+    setLoading(false)
+  }
 
 
 
@@ -114,4 +123,5 @@ const styles = StyleSheet.create({
     }
 
 })
+
 
