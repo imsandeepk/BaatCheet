@@ -3,6 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import {app} from "../firebase"
 import { getAuth, createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
+import { getFirestore,setDoc,doc, addDoc,collection } from "firebase/firestore";
 
 
 
@@ -12,10 +13,12 @@ const Signup = ({navigation}) => {
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
     const auth = getAuth(app)
-    const create=()=>{
-      createUserWithEmailAndPassword(auth,Email,Password).then(
+    const db = getFirestore(app)
+    const create= async ()=>{
+      await createUserWithEmailAndPassword(auth,Email,Password).then(
         (userCredentials)=>{
           const user = userCredentials.user;
+          
           updateProfile(auth.currentUser,{
             displayName: Name
           })
@@ -23,8 +26,17 @@ const Signup = ({navigation}) => {
         
       )
       .catch(error=>alert(error.message));
+      try{
+      await addDoc(collection(db,"name"),{
+        email:Email,
+        name:Name,
+        password:Password
+        
+      })}
+      catch (e) {
+        console.error("Error adding document: ", e);
     
-    }
+    }}
 
 
 
