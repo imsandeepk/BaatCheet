@@ -1,19 +1,28 @@
 import { StyleSheet, Text, TextInput, View,Dimensions, SafeAreaView, TouchableOpacity,Image } from 'react-native'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { auth } from '../firebase'
+import {app} from "../firebase"
+import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
+
+
+
 const Login = ({navigation}) => {
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
+    
+
+   const auth = getAuth(app);
+
     useEffect(()=>{
-      auth.onAuthStateChanged(user=>{
+      const unsub=onAuthStateChanged(auth,(user)=>{
         if(user){
           navigation.navigate("Homescreen")
         }
-      })
+      });
+       return unsub
     },[])
     const login =()=>{
-      auth.signInWithEmailAndPassword(Email,Password).then(userCredentials=>{
+      signInWithEmailAndPassword(auth,Email,Password).then(userCredentials=>{
         const user = userCredentials.user;
         console.log(user.Email)
         navigation.navigate("Homescreen")

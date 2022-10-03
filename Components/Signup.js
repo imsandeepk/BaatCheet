@@ -1,7 +1,9 @@
 import { StyleSheet, Text, TextInput, View,Dimensions, SafeAreaView, TouchableOpacity,Image,StatusBar } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
-import {auth} from "../firebase"
+import {app} from "../firebase"
+import { getAuth, createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
+
 
 
 
@@ -9,14 +11,19 @@ const Signup = ({navigation}) => {
     const [Name, setName] = useState("")
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
+    const auth = getAuth(app)
     const create=()=>{
-      auth.createUserWithEmailAndPassword(Email,Password).then(
-        userCredentials=>{
+      createUserWithEmailAndPassword(auth,Email,Password).then(
+        (userCredentials)=>{
           const user = userCredentials.user;
-          console.log(user.Email)
+          updateProfile(auth.currentUser,{
+            displayName: Name
+          })
         }
+        
       )
-      .catch(error=>alert(error.message))
+      .catch(error=>alert(error.message));
+    
     }
 
 
