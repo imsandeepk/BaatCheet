@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View,Dimensions, SafeAreaView, TouchableOpacity,Image } from 'react-native'
+import { StyleSheet, Text, TextInput, View,Dimensions, ActivityIndicator,SafeAreaView, TouchableOpacity,Image } from 'react-native'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import {app} from "../firebase"
@@ -7,6 +7,7 @@ import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase
 
 
 const Login = ({navigation}) => {
+    
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
     const [Loading, setLoading] = useState(false)
@@ -14,26 +15,27 @@ const Login = ({navigation}) => {
       return <ActivityIndicator style={{flex:1,alignSelf:'center'}} size="large" color="#00ff00" />
 
     }
-    
-
-   const auth = getAuth(app);
+    const auth = getAuth(app);
 
     useEffect(()=>{
       setLoading(true)
       const unsub=onAuthStateChanged(auth,(user)=>{
         if(user){
-          navigation.navigate("Homescreen")
+          navigation.replace("Homescreen")
         }
       });
       setLoading(false);
        return unsub
        
     },[])
+    
+
+   
     const login =()=>{
       setLoading(true)
       signInWithEmailAndPassword(auth,Email,Password).then(userCredentials=>{
         const user = userCredentials.user;
-        navigation.navigate("Homescreen")
+        navigation.replace("Homescreen")
       }
     )
     .catch(error=>alert(error.message))

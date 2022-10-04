@@ -11,7 +11,7 @@ const Homescreen = ({navigation}) => {
   const signout=()=>{
     const auth = getAuth(app)
     auth.signOut()
-    navigation.navigate("Signin")
+    navigation.replace("Signin")
   }
   useLayoutEffect(() => {
     navigation.setOptions({title:"Baat Cheet",headerStyle:{backgroundColor:"#ffffff"},headerRight:()=><View><TouchableOpacity onPress={signout}><FontAwesome name='sign-out' size={30} color="#7FBCD2"/></TouchableOpacity></View>,headerLeft:()=>false})
@@ -30,7 +30,7 @@ const Homescreen = ({navigation}) => {
   },[])
   const oneuser = ({item})=>(
     <TouchableOpacity onPress={()=>navigation.navigate("Chat")}>
-    <View style={{flexDirection:'row',flex:1,marginTop:10,backgroundColor:"#FFEEAF",height:Dimensions.get("screen").height/14,borderRadius:5,borderBottomWidth:3,borderBottomColor:"#000000"}}>
+    <View style={{flexDirection:'row',flex:1,backgroundColor:"#FFEEAF",height:Dimensions.get("screen").height/14,borderRadius:5,borderBottomWidth:3,borderBottomColor:"#000000"}}>
       
     <Image style={styles.dp} source={require("../assets/user.png")}  />
     
@@ -81,18 +81,17 @@ const styles = StyleSheet.create({
 
     },
     search:{
-      marginTop:15,
+      marginTop:1,
+      marginBottom:10,
       height:50,
       flexDirection:'row',
       alignItems:'center',
       justifyContent:"space-between",
-      width:Dimensions.get("screen").width-20,
+      width:Dimensions.get("screen").width,
       borderWidth:1.5,
       borderRadius:10,
-      marginHorizontal:8,
       backgroundColor:'lightgrey',
       borderColor:"black",
-      paddingHorizontal:10
     }
     
 })

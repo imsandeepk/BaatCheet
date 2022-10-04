@@ -1,3 +1,5 @@
+
+
 // @refresh state
 
 import { StatusBar } from 'expo-status-bar';
@@ -25,5 +27,4 @@ function App() {
   );
 }
 export default App;
-
 
