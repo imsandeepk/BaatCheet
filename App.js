@@ -12,12 +12,13 @@ import Chat from './Components/Chat';
 const Stack = createNativeStackNavigator();
 
 function App() {
+  
   return (
     <NavigationContainer>
       <Stack.Navigator >
         <Stack.Screen name="Signin" component={Login} options={{headerShown:false}}  />
         <Stack.Screen name="Signup" component={Signup} options={{headerShown:false}} />
-        <Stack.Screen name="Homescreen" component={Homescreen} options={{title:"Baat Cheet",headerStyle:{backgroundColor:"#ffffff"},headerRight:()=><FontAwesome name='sign-out' size={30} color="#7FBCD2"/>,headerLeft:()=>false}} />
+        <Stack.Screen name="Homescreen" component={Homescreen}/>
         <Stack.Screen name="Chat" component={Chat}  />
       </Stack.Navigator>
     </NavigationContainer>
